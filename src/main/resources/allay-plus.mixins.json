@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.zhangsiihanqwq.allayplus.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AllayEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

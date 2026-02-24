@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "allay-plus",
+	"version": "1.0.0",
+	"name": "Allay Plus",
+	"description": "修改悦灵的物品分类规则，使其能模糊匹配特定种类的物品",
+	"authors": [
+		"ZhangSiihanQWQ"
+	],
+	"contact": {
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/allay-plus/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.zhangsiihanqwq.allayplus.AllayPlus"
+		],
+		"fabric-datagen": [
+			"com.zhangsiihanqwq.allayplus.AllayPlusDataGenerator"
+		],
+		"client": [
+			"com.zhangsiihanqwq.allayplus.AllayPlusClient"
+		]
+	},
+	"mixins": [
+		"allay-plus.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
