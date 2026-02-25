@@ -18,8 +18,10 @@ public class AllayItemComparison {
             return stack.getItem() == stack2.getItem();
         }
 
-        // 在 1.21.1 中，旗帜图案物品没有独立类，我们通过其物品定义来判断
-        if (isBannerPattern(stack) && isBannerPattern(stack2)) {
+        String id1 = net.minecraft.registry.Registries.ITEM.getId(stack.getItem()).getPath();
+        String id2 = net.minecraft.registry.Registries.ITEM.getId(stack2.getItem()).getPath();
+        // 只要两个物品的 ID 都包含 "banner_pattern"，就视为同类
+        if (id1.contains("banner_pattern") && id2.contains("banner_pattern")) {
             return true;
         }
 
@@ -58,16 +60,6 @@ public class AllayItemComparison {
 
     private static boolean isPotion(ItemStack stack) {
         return stack.isOf(Items.POTION) || stack.isOf(Items.SPLASH_POTION) || stack.isOf(Items.LINGERING_POTION);
-    }
-
-    private static boolean isBannerPattern(ItemStack stack) {
-        // 如果 BannerPatternItem 无法找到，可以直接判断是否是那几种具体的物品
-        return stack.isOf(Items.FLOWER_BANNER_PATTERN) ||
-                stack.isOf(Items.CREEPER_BANNER_PATTERN) ||
-                stack.isOf(Items.SKULL_BANNER_PATTERN) ||
-                stack.isOf(Items.MOJANG_BANNER_PATTERN) ||
-                stack.isOf(Items.PIGLIN_BANNER_PATTERN) ||
-                stack.isOf(Items.GLOBE_BANNER_PATTERN);
     }
 
     private static boolean isHorseArmor(ItemStack stack) {
