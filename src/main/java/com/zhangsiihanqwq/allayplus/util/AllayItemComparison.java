@@ -4,23 +4,22 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.registry.tag.ItemTags;
 import java.util.Objects;
 
 public class AllayItemComparison {
 
     public static boolean customAreItemsEqual(ItemStack stack, ItemStack stack2) {
-        if (stack.isOf(Items.ENCHANTED_BOOK) && stack2.isOf(Items.ENCHANTED_BOOK)) {
-            return true;
-        }
 
+        //药水逻辑：只比较物品类型，忽略具体效果，允许不同类型的药水互相匹配
         if (isPotion(stack) && isPotion(stack2)) {
             return stack.getItem() == stack2.getItem();
         }
 
+        //旗帜图案：通过物品 ID 模糊匹配，允许所有包含 "banner_pattern" 的物品互相匹配
         String id1 = net.minecraft.registry.Registries.ITEM.getId(stack.getItem()).getPath();
         String id2 = net.minecraft.registry.Registries.ITEM.getId(stack2.getItem()).getPath();
-        // 只要两个物品的 ID 都包含 "banner_pattern"，就视为同类
         if (id1.contains("banner_pattern") && id2.contains("banner_pattern")) {
             return true;
         }
@@ -46,11 +45,24 @@ public class AllayItemComparison {
             return false;
         }
 
+        //床
         if (stack.isIn(ItemTags.BEDS) && stack2.isIn(ItemTags.BEDS)) {
             return true;
         }
 
+        //马铠
         if (isHorseArmor(stack) && isHorseArmor(stack2)) {
+            return true;
+        }
+
+        // 陶片逻辑：使用原版 ItemTags.DECORATED_POT_SHERDS 标签判定
+        if (stack.isIn(ItemTags.DECORATED_POT_SHERDS) && stack2.isIn(ItemTags.DECORATED_POT_SHERDS)) {
+            return true;
+        }
+
+        // 锻造模板逻辑：直接使用 SmithingTemplateItem 类判定
+        // 这样会同时包含下界合金升级模版和所有的纹饰模版
+        if (stack.getItem() instanceof SmithingTemplateItem && stack2.getItem() instanceof SmithingTemplateItem) {
             return true;
         }
 
