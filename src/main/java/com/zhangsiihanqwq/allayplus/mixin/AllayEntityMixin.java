@@ -24,6 +24,9 @@ public abstract class AllayEntityMixin {
     @Unique
     private boolean allayPlus$deepSleep = false;
 
+    @Unique
+    private boolean allayPlus$wasDeepSleep = false;
+
     @Inject
             (method = "tick", at = @At("HEAD"), cancellable = true)
 
@@ -82,9 +85,23 @@ public abstract class AllayEntityMixin {
                 }
             } else {
                 self.setVelocity(Vec3d.ZERO);
+
+                if (self.velocityDirty) {
+                    self.updateTrackedPosition(self.getX(), self.getY(), self.getZ());
+                    self.velocityDirty = false;
+                }
             }
 
+            allayPlus$wasDeepSleep = true;
+
             ci.cancel();
+        } else {
+            if (allayPlus$wasDeepSleep) {
+                self.setYaw(self.getYaw());
+                self.velocityDirty = true;
+
+                allayPlus$wasDeepSleep = false;
+            }
         }
     }
     /**
