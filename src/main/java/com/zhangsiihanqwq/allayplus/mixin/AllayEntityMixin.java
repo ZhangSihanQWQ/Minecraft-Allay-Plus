@@ -43,7 +43,6 @@ public class AllayEntityMixin {
         boolean hasItems = !self.getInventory().isEmpty();
         boolean hasWalkTarget = self.getBrain().hasMemoryModule(MemoryModuleType.WALK_TARGET);
         boolean heardNoteBlock = self.getBrain().hasMemoryModule(MemoryModuleType.LIKED_NOTEBLOCK);
-
         boolean isBusy = hasItems || hasWalkTarget || heardNoteBlock;
 
         if (isBusy) {
@@ -53,9 +52,13 @@ public class AllayEntityMixin {
         }
 
         if (allayPlus$shouldFreezeAI && allayPlus$graceTicks <= 0) {
-            if (!self.getNavigation().isIdle()) {
-                self.getNavigation().stop();
+            if (!heardNoteBlock) {
+                if (!self.getNavigation().isIdle()) {
+                    self.getNavigation().stop();
+                }
+                self.getLookControl().lookAt(self.getX(), self.getEyeY(), self.getZ());
             }
+
             ci.cancel();
         }
     }
