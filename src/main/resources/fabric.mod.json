@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "allay-plus",
-	"version": "1.1.2",
+	"version": "1.1.4",
 	"name": "Allay Plus",
 	"description": "修改悦灵的物品分类规则，使其能模糊匹配特定种类的物品，并对其行为做了部分优化。",
 	"authors": [
