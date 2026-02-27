@@ -1,6 +1,6 @@
 package com.zhangsiihanqwq.allayplus;
 
-import com.zhangsiihanqwq.allayplus.util.AllayPlusConfig; // 记得导入配置类
+import com.zhangsiihanqwq.allayplus.util.AllayPlusConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
@@ -26,26 +26,29 @@ public class AllayPlus implements ModInitializer {
 
 		LOGGER.info("AllayPlus 正在初始化...");
 
-		// 注册指令
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			dispatcher.register(CommandManager.literal("allayplus")
-					.requires(source -> source.hasPermissionLevel(2)) // OP权限
-					.then(CommandManager.literal("silentResonanceEnabled")
-							.then(CommandManager.argument("enabled", BoolArgumentType.bool())
-									.executes(context -> {
-										boolean enabled = BoolArgumentType.getBool(context, "enabled");
+		AllayPlusConfig.load();
+		LOGGER.info("AllayPlus 规则: silentResonanceEnabled = " + AllayPlusConfig.silentResonanceEnabled);
 
-										AllayPlusConfig.silentResonanceEnabled = enabled;
+			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+				dispatcher.register(CommandManager.literal("allayplus")
+						.requires(source -> source.hasPermissionLevel(2)) // OP权限
+						.then(CommandManager.literal("silentResonanceEnabled")
+								.then(CommandManager.argument("enabled", BoolArgumentType.bool())
+										.executes(context -> {
+											boolean enabled = BoolArgumentType.getBool(context, "enabled");
+											AllayPlusConfig.silentResonanceEnabled = enabled;
 
-										Text message = Text.literal("规则 “静音音符盒可与悦灵共振” 已设为 " + (enabled ? "True" : "False"))
-												.formatted(enabled ? Formatting.GREEN : Formatting.RED);
+											AllayPlusConfig.save();
 
-										context.getSource().sendFeedback(() -> message, true);
-										return 1;
-									})
-							)
-					)
-			);
-		});
+											Text message = Text.literal("规则 “静音音符盒可与悦灵共振” 已设为 " + (enabled ? "True" : "False"))
+													.formatted(enabled ? Formatting.GREEN : Formatting.RED);
+
+											context.getSource().sendFeedback(() -> message, true);
+											return 1;
+										})
+								)
+						)
+				);
+			});
 	}
 }
