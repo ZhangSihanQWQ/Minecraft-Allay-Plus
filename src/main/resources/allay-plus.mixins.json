@@ -3,7 +3,8 @@
 	"package": "com.zhangsiihanqwq.allayplus.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"AllayEntityMixin"
+		"AllayEntityMixin",
+		"AllayBrainMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
