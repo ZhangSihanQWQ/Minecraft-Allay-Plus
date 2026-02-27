@@ -23,7 +23,11 @@ public class NoteBlockMixin {
      */
     @Inject(method = "playNote", at = @At("HEAD"))
     private void onPlayNote(@Nullable Entity entity, BlockState state, World world, BlockPos pos, CallbackInfo ci) {
-        boolean isNotBaseBlock = ((NoteBlockInstrument)state.get(NoteBlock.INSTRUMENT)).isNotBaseBlock();
+        if (!com.zhangsiihanqwq.allayplus.util.AllayPlusConfig.silentResonanceEnabled) {
+            return;
+        }
+
+        boolean isNotBaseBlock = ((NoteBlockInstrument) state.get(NoteBlock.INSTRUMENT)).isNotBaseBlock();
         boolean isAirAbove = world.getBlockState(pos.up()).isAir();
 
         if (!isNotBaseBlock && !isAirAbove) {
