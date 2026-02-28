@@ -5,7 +5,9 @@
 	"mixins": [
 		"AllayEntityMixin",
 		"AllayBrainMixin",
-		"NoteBlockMixin"
+		"NoteBlockMixin",
+		"BrainMixin",
+		"TemptationCooldownTaskMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
