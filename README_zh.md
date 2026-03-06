@@ -3,6 +3,8 @@
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.1-brightgreen.svg)](https://www.minecraft.net/)
 [![Platform](https://img.shields.io/badge/Platform-Fabric-blue.svg)](https://fabricmc.net/)
 
+[English](README.md) | **中文**
+
 **AllayPlus** 是一款在原版基础上增强悦灵（Allay）功能的 Fabric 模组。它不仅赋予了悦灵更智能、更宽泛的物品搜集分类逻辑，还通过重构底层 AI 机制，实现了服务器性能优化与自由可配置的规则系统。
 
 ---
