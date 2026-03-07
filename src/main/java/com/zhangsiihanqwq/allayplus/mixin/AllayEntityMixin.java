@@ -22,14 +22,36 @@ public abstract class AllayEntityMixin implements AllayPlusAccess {
         return this.allayPlus$deepSleep;
     }
 
+    @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
+    private void onReadNbt(net.minecraft.nbt.NbtCompound nbt, CallbackInfo ci) {
+        this.allayPlus$updateLogic();
+    }
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void onTick(CallbackInfo ci) {
         AllayEntity self = (AllayEntity) (Object) this;
         if (self.age % 20 == 0) {
-            PlayerEntity player = self.getWorld().getClosestPlayer(
-                    self.getX(), self.getY(), self.getZ(), 64.0, false);
-            boolean heardNoteBlock = self.getBrain().hasMemoryModule(MemoryModuleType.LIKED_NOTEBLOCK);
-            this.allayPlus$deepSleep = (player == null || !self.canSee(player)) && !heardNoteBlock;
+            this.allayPlus$updateLogic();
+        }
+    }
+
+    @Unique
+    private void allayPlus$updateLogic() {
+        AllayEntity self = (AllayEntity) (Object) this;
+        if (self.getWorld() == null || self.getWorld().isClient) return;
+
+        PlayerEntity player = self.getWorld().getClosestPlayer(self.getX(), self.getY(), self.getZ(), 64.0, false);
+        boolean hasNoteBlock = self.getBrain().hasMemoryModule(MemoryModuleType.LIKED_NOTEBLOCK);
+
+        if ((player == null || !self.canSee(player)) && !hasNoteBlock) {
+            this.allayPlus$deepSleep = true;
+
+            if (self.getBrain().hasMemoryModule(MemoryModuleType.LIKED_PLAYER)) {
+                self.getBrain().forget(MemoryModuleType.LIKED_PLAYER);
+                self.getNavigation().stop();
+            }
+        } else {
+            this.allayPlus$deepSleep = false;
         }
     }
     /**

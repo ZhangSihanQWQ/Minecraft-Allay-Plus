@@ -29,7 +29,7 @@ public class AllayPlus implements ModInitializer {
 
 			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 				dispatcher.register(CommandManager.literal("allayplus")
-						.requires(source -> source.hasPermissionLevel(2))
+						.requires(source -> source.hasPermissionLevel(2))	//0普通玩家，1旁路，2常规OP，3高级OP，4所有者
 								.then(CommandManager.literal("silentResonanceEnabled")
 										.then(CommandManager.argument("enabled", BoolArgumentType.bool())
 												.executes(context -> {
@@ -58,6 +58,25 @@ public class AllayPlus implements ModInitializer {
 													String status = ticks == -1 ? "原版（60 ticks）" : (ticks == 0 ? "禁用" : ticks + " ticks");
 
 													Text message = Text.literal("投掷冷却已设置为: ")
+															.formatted(Formatting.GRAY)
+															.append(Text.literal(status)
+																	.formatted(Formatting.WHITE, Formatting.UNDERLINE, Formatting.ITALIC, Formatting.BOLD));
+
+													context.getSource().sendFeedback(() -> message, true);
+													return 1;
+												})
+										)
+								)
+								.then(CommandManager.literal("maxHearingDistance")
+										.then(CommandManager.argument("range", IntegerArgumentType.integer(-1, 128))
+												.executes(context -> {
+													int range = IntegerArgumentType.getInteger(context, "range");
+													AllayPlusConfig.maxHearingDistance = range;
+													AllayPlusConfig.save();
+
+													String status = range == -1 ? "原版（16 格）" : (range == 0 ? "禁用音符盒感应" : range + " 格");
+
+													Text message = Text.literal("悦灵最大听觉距离已设置为: ")
 															.formatted(Formatting.GRAY)
 															.append(Text.literal(status)
 																	.formatted(Formatting.WHITE, Formatting.UNDERLINE, Formatting.ITALIC, Formatting.BOLD));
