@@ -37,12 +37,13 @@ To address MSPT spikes caused by large groups of Allays, the mod implements a st
 ### 3. Customizable Rule System
 Multiple configurable rules have been added. Modifying these rules requires **Permission Level 2 (OP)**.
 
-| Rule Name | Command Usage | Description | Default |
-| :--- | :--- | :--- | :--- |
+| Rule Name            | Command Usage                                     | Description | Default |
+|:---------------------|:--------------------------------------------------| :--- | :--- |
 | **Silent Resonance** | `/allayplus silentResonanceEnabled <true\|false>` | When enabled, Note Blocks blocked by a block above ("Silent") will still trigger the Allay's response logic via Game Events. | `false` |
-| **Throw Cooldown** | `/allayplus throwCooldownTime <ticks>` | Customizes the cooldown before an Allay can pick up items again after throwing. Set to `0` for no cooldown, `-1` for vanilla (60 ticks). | `-1` |
+| **Throw Cooldown**   | `/allayplus throwCooldownTime <ticks>`            | Customizes the cooldown before an Allay can pick up items again after throwing. Set to `0` for no cooldown, `-1` for vanilla (60 ticks). | `-1` |
+| **Hearing Distance** | `/allayplus maxHearingDistance <range>`           | Customizes the maximum distance at which Allays can detect Note Blocks. Set to `0` to disable Note Block interaction, or `-1` for default vanilla behavior. | `-1` |
 
-> **Note**: Regarding `throwCooldownTime`, it is not recommended to set it too low (e.g., 0-5 ticks). Otherwise, the Allay may immediately pick up the item it just threw before it can be collected by a Hopper or Note Block.
+> **Note**: Regarding `throwCooldownTime`, it is not recommended to set it too low (e.g., 0-16 ticks). Otherwise, the Allay may immediately pick up the item it just threw before it can be collected by a Hopper or Note Block.
 
 ---
 

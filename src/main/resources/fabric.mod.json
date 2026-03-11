@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
 	"id": "allay-plus",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"name": "Allay Plus",
-	"description": "修改悦灵的物品分类规则，使其能模糊匹配特定种类的物品，并对其行为做了部分优化。",
+	"description": "It introduces smarter and broader item collection logic, optimizes server performance by refactoring underlying AI mechanisms, and provides a customizable rule system.",
 	"authors": [
 		"ZhangSiihanQWQ"
 	],
